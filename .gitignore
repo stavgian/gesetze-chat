@@ -1,0 +1,22 @@
+# Python
+api/.venv/
+api/__pycache__/
+api/**/__pycache__/
+*.pyc
+.pytest_cache/
+
+# Env
+.env
+api/.env
+
+# Node / Angular
+web/node_modules/
+web/dist/
+web/.angular/
+
+# Private documents must never be committed
+private-docs/*
+!private-docs/.gitkeep
+
+# OS
+.DS_Store
