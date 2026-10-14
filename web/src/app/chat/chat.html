@@ -1,0 +1,65 @@
+<div class="chat">
+  <header class="chat__header">
+    <h1>gesetze-chat</h1>
+    <p class="disclaimer">
+      General information from public law texts, not legal advice.
+    </p>
+  </header>
+
+  <form class="chat__form" (ngSubmit)="ask()">
+    <input
+      type="text"
+      name="question"
+      [(ngModel)]="question"
+      placeholder="e.g. Wann darf der Vermieter kündigen?"
+      [disabled]="loading()"
+      autocomplete="off"
+    />
+    <button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Asking…' : 'Ask' }}
+    </button>
+  </form>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="loading">Searching the documents…</p>
+  }
+
+  @if (result()) {
+    <section class="answer">
+      <span class="mode-badge" [class.mode-badge--retrieval]="result()!.mode === 'retrieval_only'">
+        {{ result()!.mode === 'full' ? 'LLM answer' : 'Retrieval only' }}
+      </span>
+
+      @if (result()!.answer) {
+        <p class="answer__text">{{ result()!.answer }}</p>
+      } @else {
+        <p class="answer__text answer__text--muted">
+          No LLM is configured (LLM_PROVIDER=none), so here are the most relevant passages instead of a generated answer.
+        </p>
+      }
+
+      @if (result()!.sources.length) {
+        <h2 class="sources__title">Sources</h2>
+        <ul class="sources">
+          @for (source of result()!.sources; track $index) {
+            <li class="source">
+              <button type="button" class="source__header" (click)="toggleSource($index)">
+                <span class="source__section">{{ source.section || source.file }}</span>
+                <span class="source__file">{{ source.file }}</span>
+                <span class="source__score">score {{ source.score.toFixed(2) }}</span>
+                <span class="source__toggle">{{ isExpanded($index) ? '▲' : '▼' }}</span>
+              </button>
+              @if (isExpanded($index)) {
+                <p class="source__chunk">{{ source.chunk }}</p>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  }
+</div>

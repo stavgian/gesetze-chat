@@ -1,0 +1,157 @@
+.chat {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.chat__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.75rem;
+  }
+}
+
+.disclaimer {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b6b6b;
+}
+
+.chat__form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  input {
+    flex: 1;
+    padding: 0.65rem 0.85rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  button {
+    padding: 0.65rem 1.25rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #1a1a2e;
+    color: white;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error {
+  color: #b00020;
+  background: #fdecea;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  color: #6b6b6b;
+}
+
+.mode-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #e3f2e1;
+  color: #1e5e20;
+  margin-bottom: 0.75rem;
+
+  &--retrieval {
+    background: #eef1fb;
+    color: #2a3a8c;
+  }
+}
+
+.answer__text {
+  line-height: 1.5;
+  white-space: pre-wrap;
+
+  &--muted {
+    color: #6b6b6b;
+    font-style: italic;
+  }
+}
+
+.sources__title {
+  font-size: 1rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.source {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.source__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: #fafafa;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.source__section {
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+.source__file {
+  color: #6b6b6b;
+  flex: 1;
+}
+
+.source__score {
+  color: #6b6b6b;
+  font-size: 0.8rem;
+}
+
+.source__chunk {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  border-top: 1px solid #e0e0e0;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 480px) {
+  .chat__form {
+    flex-direction: column;
+  }
+
+  .source__header {
+    flex-wrap: wrap;
+  }
+}
