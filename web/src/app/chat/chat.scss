@@ -6,35 +6,35 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  height: min(70vh, 640px);
-  min-height: 420px;
+  height: min(52vh, 480px);
+  min-height: 320px;
 }
 
 .chatbox__thread {
   flex: 1;
   overflow-y: auto;
-  padding: 1.25rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
   scroll-behavior: smooth;
 }
 
 .chatbox__empty {
   margin: auto;
-  max-width: 320px;
+  max-width: 280px;
   color: var(--color-text-muted);
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   line-height: 1.5;
 }
 
 .bubble {
   max-width: 88%;
-  padding: 0.75rem 1rem;
-  border-radius: 16px;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 14px;
+  line-height: 1.45;
+  font-size: 0.88rem;
 
   p {
     margin: 0;
@@ -46,7 +46,7 @@
   background: var(--color-primary);
   color: #fff;
   border-bottom-right-radius: 4px;
-  margin-top: 0.4rem;
+  margin-top: 0.25rem;
 }
 
 .bubble--answer {
@@ -98,15 +98,15 @@
 
 .mode-badge {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 0.2rem 0.6rem;
+  padding: 0.15rem 0.55rem;
   border-radius: 999px;
   background: #e3f2e1;
   color: #1e5e20;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.45rem;
 
   &--retrieval {
     background: #eef1fb;
@@ -115,7 +115,7 @@
 }
 
 .bubble__text {
-  line-height: 1.55;
+  line-height: 1.5;
   white-space: pre-wrap;
 
   &--muted {
@@ -125,9 +125,9 @@
 }
 
 .sources__title {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  margin: 1rem 0 0.5rem;
+  margin: 0.75rem 0 0.4rem;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -139,7 +139,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .source {
@@ -153,13 +153,13 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 0.75rem;
+  gap: 0.5rem;
+  padding: 0.4rem 0.65rem;
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-family: inherit;
   color: var(--color-text);
 }
@@ -190,9 +190,9 @@
 
 .source__chunk {
   margin: 0;
-  padding: 0.65rem 0.75rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
   border-top: 1px solid var(--color-border);
   white-space: pre-wrap;
   color: var(--color-text-muted);
@@ -200,15 +200,15 @@
 
 .chatbox__form {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.85rem;
+  gap: 0.45rem;
+  padding: 0.65rem;
   border-top: 1px solid var(--color-border);
   background: var(--color-surface);
 
   input {
     flex: 1;
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
     font-family: inherit;
     border: 1px solid var(--color-border);
     border-radius: 999px;
@@ -230,9 +230,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 72px;
-    padding: 0.7rem 1.3rem;
-    font-size: 0.95rem;
+    min-width: 64px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.88rem;
     font-weight: 600;
     font-family: inherit;
     border: none;
@@ -270,16 +270,16 @@
 
 .chatbox__form-error {
   margin: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.85rem;
   color: var(--color-error);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   background: var(--color-surface);
 }
 
 @media (max-width: 600px) {
   .chatbox {
-    height: min(75vh, 100%);
-    min-height: 380px;
+    height: min(62vh, 100%);
+    min-height: 320px;
     border-radius: 12px;
   }
 
@@ -288,6 +288,6 @@
   }
 
   .chatbox__form {
-    padding: 0.65rem;
+    padding: 0.55rem;
   }
 }

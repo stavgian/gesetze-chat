@@ -154,13 +154,5 @@ All of the above (backend lint/format/tests, frontend lint/format/tests/build) r
 - Retrieval hit rate @3 is 55% — good enough to demonstrate the pipeline, not production quality. A cross-encoder reranker on top of the initial cosine search would likely help most.
 - The in-memory NumPy index rebuilds on every restart and doesn't scale past a few thousand chunks; a real deployment would use pgvector or a dedicated vector store.
 - No streaming: the Anthropic/Ollama call blocks until the full answer is generated.
-- No Docker setup or CI pipeline yet — both would make this easier to run and to trust.
+- No Docker setup yet — would make this easier to run without a local Python/Node toolchain.
 - No authentication/rate limiting, since this is a local demo.
-
-## Recording the demo
-
-1. Start the backend (`LLM_PROVIDER=none` is fine, or `ollama` for a generated answer) and the frontend as above.
-2. Open http://localhost:4200 in a clean browser window sized around 1280×800.
-3. Use a screen recorder (e.g. macOS `Cmd+Shift+5`, or [Kap](https://getkap.co/)) and start recording.
-4. Type one of the example questions above, submit, and let the answer and sources render; expand one source to show the chunk text.
-5. Stop recording, trim, convert to GIF (e.g. `ffmpeg -i demo.mov -vf "fps=10,scale=960:-1" assets/demo.gif`), and drop it into `assets/demo.gif`.
