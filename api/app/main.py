@@ -1,4 +1,5 @@
 """FastAPI app: builds the RAG index once at startup, then answers questions."""
+
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -71,8 +72,7 @@ def ask(
 
     retrieved = rag_index.retrieve(question, settings.top_k)
     sources = [
-        Source(file=chunk.file, section=chunk.section, chunk=chunk.text, score=score)
-        for chunk, score in retrieved
+        Source(file=chunk.file, section=chunk.section, chunk=chunk.text, score=score) for chunk, score in retrieved
     ]
 
     if isinstance(llm_provider, NoneProvider):

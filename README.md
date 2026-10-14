@@ -1,5 +1,7 @@
 # gesetze-chat
 
+[![CI](https://github.com/stavgian/gesetze-chat/actions/workflows/ci.yml/badge.svg)](https://github.com/stavgian/gesetze-chat/actions/workflows/ci.yml)
+
 A retrieval-augmented question-answering demo for German everyday law (tenancy, employment, leave), with a Python/FastAPI backend and an Angular frontend.
 
 > **Portfolio demo — general information from public law texts, not legal advice.**
@@ -108,22 +110,29 @@ To query your own documents instead of the demo law texts, set `DOCS_DIR=../priv
 ## Tests and evaluation
 
 ```bash
-# Backend tests (no network calls)
+# Backend tests, lint and format check (no network calls)
 cd api
 source .venv/bin/activate   # .venv\Scripts\Activate.ps1 on Windows
+pip install -r requirements-dev.txt
 pytest
+ruff check .
+ruff format --check .
 
 # Retrieval evaluation (no API key needed)
 python eval/run_eval.py
 ```
 
 ```bash
-# Frontend tests
+# Frontend tests, lint and format check
 cd web
 npm test
+npm run lint
+npm run format:check
 ```
 
 The evaluation runs 20 hand-verified questions (German and English) against the real law texts and checks whether the expected section appears in the top 3 retrieved chunks. Current result: **11/20 = 55% hit rate @3**. See [`api/eval/questions.json`](api/eval/questions.json) for the questions and [`api/eval/run_eval.py`](api/eval/run_eval.py) for the script.
+
+All of the above (backend lint/format/tests, frontend lint/format/tests/build) run on every push via [GitHub Actions](.github/workflows/ci.yml).
 
 ## Example questions to try
 

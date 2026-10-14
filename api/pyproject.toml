@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+# B008: FastAPI's `Depends(...)` as a default argument is the documented,
+# intended pattern, not the mutable-default-argument bug this rule targets.
+ignore = ["B008"]

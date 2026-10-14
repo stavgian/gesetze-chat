@@ -4,6 +4,7 @@ that actually answers it shows up in the top-3 retrieved chunks.
 Only needs the embedding model, not an LLM provider, so it runs with no API
 key: `python eval/run_eval.py` from the api/ directory.
 """
+
 import json
 import sys
 from pathlib import Path

@@ -3,6 +3,7 @@
 Using plain env vars (not a secrets manager) is fine for a demo: the only
 secret is ANTHROPIC_API_KEY, and it never leaves the process.
 """
+
 import os
 from pathlib import Path
 
@@ -15,9 +16,7 @@ class Settings:
     def __init__(self) -> None:
         # Directory of documents to index. Point this at private-docs/ to
         # run the RAG pipeline over your own files instead of the demo laws.
-        self.docs_dir: Path = Path(
-            os.environ.get("DOCS_DIR", str(Path(__file__).resolve().parents[2] / "docs"))
-        )
+        self.docs_dir: Path = Path(os.environ.get("DOCS_DIR", str(Path(__file__).resolve().parents[2] / "docs")))
 
         # Which LLM generates the final answer from retrieved context.
         # "none" skips generation entirely, so the app works with zero API keys.

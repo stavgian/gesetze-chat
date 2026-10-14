@@ -5,6 +5,7 @@ No vector database and no LangChain on purpose — this is small enough (a few
 hundred chunks for the demo corpus) that a NumPy matrix in memory is simpler,
 faster, and easier to explain than either.
 """
+
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -22,9 +23,9 @@ LAW_ABBREVIATION_RE = re.compile(r"\(([A-Za-zÄÖÜäöüß]{2,10})\)")
 
 @dataclass
 class Chunk:
-    file: str       # e.g. "bgb_mietrecht.md"
-    section: str    # e.g. "§ 573 BGB", or "" if the source has no headings
-    text: str       # the chunk's actual text, used for embedding and display
+    file: str  # e.g. "bgb_mietrecht.md"
+    section: str  # e.g. "§ 573 BGB", or "" if the source has no headings
+    text: str  # the chunk's actual text, used for embedding and display
 
 
 def split_into_chunks(text: str, chunk_size: int, overlap: int) -> list[str]:
@@ -198,7 +199,8 @@ Rules:
 - Answer only using information contained in the context. Do not use outside knowledge.
 - Answer in the same language as the question.
 - Cite the section you used, in the form "§ NNN <Law>" (e.g. "§ 573 BGB"), exactly as given in the context's [brackets].
-- If the context does not contain the answer, say clearly that you don't know based on the provided documents. Do not guess.
+- If the context does not contain the answer, say clearly that you don't know based on the
+  provided documents. Do not guess.
 
 Context:
 {context}

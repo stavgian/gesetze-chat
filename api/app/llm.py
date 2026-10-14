@@ -6,6 +6,7 @@ leave the machine. "anthropic" calls the hosted API, which does send the
 retrieved chunks (not the whole document) to Anthropic. "none" returns no
 answer at all, so the app is fully usable with zero API keys.
 """
+
 from abc import ABC, abstractmethod
 
 import httpx
@@ -15,8 +16,7 @@ from app.config import Settings
 
 class LLMProvider(ABC):
     @abstractmethod
-    def generate(self, prompt: str) -> str:
-        ...
+    def generate(self, prompt: str) -> str: ...
 
 
 class NoneProvider(LLMProvider):

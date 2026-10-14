@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { Component, ElementRef, ViewChild, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal, inject } from '@angular/core';
 
 import { AskResponse, ChatService } from './chat.service';
 
@@ -17,14 +17,14 @@ export interface ChatMessage {
   styleUrl: './chat.scss',
 })
 export class Chat {
+  private readonly chatService = inject(ChatService);
+
   question = '';
   readonly messages = signal<ChatMessage[]>([]);
   readonly formError = signal<string | null>(null);
   readonly expandedSources = signal<Set<string>>(new Set());
 
   @ViewChild('thread') private threadRef?: ElementRef<HTMLDivElement>;
-
-  constructor(private readonly chatService: ChatService) {}
 
   get isLoading(): boolean {
     const messages = this.messages();
