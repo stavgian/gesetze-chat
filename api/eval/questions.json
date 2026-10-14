@@ -1,0 +1,102 @@
+[
+  {
+    "question": "Wie viele Werktage Urlaub stehen einem Arbeitnehmer mindestens pro Jahr zu?",
+    "expected_file": "burlg.md",
+    "expected_section": "§ 3 BUrlG"
+  },
+  {
+    "question": "After how many months of employment does an employee gain the full vacation entitlement?",
+    "expected_file": "burlg.md",
+    "expected_section": "§ 4 BUrlG"
+  },
+  {
+    "question": "Bis wann spätestens muss ins nächste Kalenderjahr übertragener Urlaub genommen werden?",
+    "expected_file": "burlg.md",
+    "expected_section": "§ 7 BUrlG"
+  },
+  {
+    "question": "How is an employee's vacation pay (Urlaubsentgelt) calculated?",
+    "expected_file": "burlg.md",
+    "expected_section": "§ 11 BUrlG"
+  },
+  {
+    "question": "Was gilt, wenn ein Arbeitnehmer während seines Urlaubs krank wird?",
+    "expected_file": "burlg.md",
+    "expected_section": "§ 9 BUrlG"
+  },
+  {
+    "question": "Innerhalb welcher Frist muss ein Arbeitnehmer gegen seine Kündigung Klage beim Arbeitsgericht erheben?",
+    "expected_file": "kschg.md",
+    "expected_section": "§ 4 KSchG"
+  },
+  {
+    "question": "Under what conditions is a dismissal considered socially unjustified under German law?",
+    "expected_file": "kschg.md",
+    "expected_section": "§ 1 KSchG"
+  },
+  {
+    "question": "Ab wie vielen regelmäßig beschäftigten Arbeitnehmern gilt der Kündigungsschutz für nach 2003 begonnene Arbeitsverhältnisse?",
+    "expected_file": "kschg.md",
+    "expected_section": "§ 23 KSchG"
+  },
+  {
+    "question": "How is the severance payment (Abfindung) calculated for an operationally-driven dismissal?",
+    "expected_file": "kschg.md",
+    "expected_section": "§ 1a KSchG"
+  },
+  {
+    "question": "Was ist eine Änderungskündigung?",
+    "expected_file": "kschg.md",
+    "expected_section": "§ 2 KSchG"
+  },
+  {
+    "question": "Wie lange muss der Arbeitgeber im Krankheitsfall das Arbeitsentgelt fortzahlen?",
+    "expected_file": "entgfg.md",
+    "expected_section": "§ 3 EntgFG"
+  },
+  {
+    "question": "After how many weeks of continuous employment does the entitlement to continued pay during illness first arise?",
+    "expected_file": "entgfg.md",
+    "expected_section": "§ 3 EntgFG"
+  },
+  {
+    "question": "Wie hoch darf eine Mietsicherheit (Kaution) höchstens sein?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 551 BGB"
+  },
+  {
+    "question": "In how many installments may a tenant pay a cash security deposit?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 551 BGB"
+  },
+  {
+    "question": "In welcher Form muss die Kündigung eines Mietverhältnisses erfolgen?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 568 BGB"
+  },
+  {
+    "question": "What is the standard notice period for an ordinary termination of a residential lease?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 573c BGB"
+  },
+  {
+    "question": "Wann darf der Vermieter wegen Zahlungsverzugs außerordentlich fristlos kündigen?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 543 BGB"
+  },
+  {
+    "question": "What happens to a lease if the tenant dies?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 580 BGB"
+  },
+  {
+    "question": "Wann ist die Miete fällig?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 556b BGB"
+  },
+  {
+    "question": "What right does a tenant have if a defect in the rented property eliminates its usability?",
+    "expected_file": "bgb_mietrecht.md",
+    "expected_section": "§ 536 BGB"
+  }
+]
