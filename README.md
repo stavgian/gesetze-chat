@@ -6,7 +6,7 @@ A retrieval-augmented question-answering demo for German everyday law (tenancy, 
 
 > **Portfolio demo — general information from public law texts, not legal advice.**
 
-![Demo](assets/demo.gif)
+![Demo](assets/demo-gesetz-chat.gif)
 
 ## What it does
 
