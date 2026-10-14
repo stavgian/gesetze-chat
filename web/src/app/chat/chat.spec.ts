@@ -30,19 +30,21 @@ describe('Chat', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shows an error instead of calling the backend when the question is empty', () => {
+  it('shows a form error instead of calling the backend when the question is empty', () => {
     component.question = '   ';
     component.ask();
 
-    expect(component.error()).toBeTruthy();
+    expect(component.formError()).toBeTruthy();
+    expect(component.messages().length).toBe(0);
     httpMock.expectNone(`${environment.apiBaseUrl}/ask`);
   });
 
-  it('stores the response and clears loading state on a successful ask', () => {
+  it('appends a message and clears loading state on a successful ask', () => {
     component.question = 'Wann darf der Vermieter kündigen?';
     component.ask();
 
-    expect(component.loading()).toBe(true);
+    expect(component.messages().length).toBe(1);
+    expect(component.messages()[0].loading).toBe(true);
 
     const req = httpMock.expectOne(`${environment.apiBaseUrl}/ask`);
     expect(req.request.method).toBe('POST');
@@ -52,8 +54,19 @@ describe('Chat', () => {
       mode: 'retrieval_only',
     });
 
-    expect(component.loading()).toBe(false);
-    expect(component.result()?.mode).toBe('retrieval_only');
-    expect(component.result()?.sources.length).toBe(1);
+    expect(component.messages()[0].loading).toBe(false);
+    expect(component.messages()[0].result?.mode).toBe('retrieval_only');
+    expect(component.messages()[0].result?.sources.length).toBe(1);
+  });
+
+  it('records an error on the message when the backend request fails', () => {
+    component.question = 'Wann darf der Vermieter kündigen?';
+    component.ask();
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/ask`);
+    req.error(new ProgressEvent('error'));
+
+    expect(component.messages()[0].loading).toBe(false);
+    expect(component.messages()[0].error).toBeTruthy();
   });
 });

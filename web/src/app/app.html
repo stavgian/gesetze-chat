@@ -1,1 +1,29 @@
-<app-chat></app-chat>
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title"><span class="page__title-icon">⚖️</span> gesetze-chat</h1>
+    <p class="page__subtitle">
+      Ask questions about German tenancy, employment and leave law. Answers are retrieved from
+      official law texts — not generated from general knowledge.
+    </p>
+    <p class="disclaimer">General information from public law texts, not legal advice.</p>
+  </header>
+
+  <main class="page__main">
+    <app-chat></app-chat>
+  </main>
+
+  <footer class="page__footer">
+    <p>
+      © {{ year }}
+      <a href="https://stavgian.de" target="_blank" rel="noopener noreferrer">Yiannis Stavgianoudakis</a>
+      &nbsp;·&nbsp;
+      <a
+        href="https://github.com/stavgian/gesetze-chat"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Source code on GitHub
+      </a>
+    </p>
+  </footer>
+</div>

@@ -8,4 +8,6 @@ import { Chat } from './chat/chat';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  readonly year = new Date().getFullYear();
+}

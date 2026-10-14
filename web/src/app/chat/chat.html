@@ -1,65 +1,82 @@
-<div class="chat">
-  <header class="chat__header">
-    <h1>gesetze-chat</h1>
-    <p class="disclaimer">
-      General information from public law texts, not legal advice.
-    </p>
-  </header>
+<div class="chatbox">
+  <div class="chatbox__thread" #thread>
+    @if (!messages().length) {
+      <p class="chatbox__empty">
+        Ask a question below to get started — e.g. &ldquo;Wann darf der Vermieter k&uuml;ndigen?&rdquo;
+      </p>
+    }
 
-  <form class="chat__form" (ngSubmit)="ask()">
+    @for (message of messages(); track $index; let i = $index) {
+      <div class="bubble bubble--question">
+        <p>{{ message.question }}</p>
+      </div>
+
+      <div class="bubble bubble--answer">
+        @if (message.loading) {
+          <p class="bubble__loading" aria-label="Searching the documents">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </p>
+        } @else if (message.error) {
+          <p class="bubble__error">{{ message.error }}</p>
+        } @else if (message.result) {
+          <span
+            class="mode-badge"
+            [class.mode-badge--retrieval]="message.result.mode === 'retrieval_only'"
+          >
+            {{ message.result.mode === 'full' ? 'LLM answer' : 'Retrieval only' }}
+          </span>
+
+          @if (message.result.answer) {
+            <p class="bubble__text">{{ message.result.answer }}</p>
+          } @else {
+            <p class="bubble__text bubble__text--muted">
+              No LLM is configured, so here are the most relevant passages instead of a generated
+              answer.
+            </p>
+          }
+
+          @if (message.result.sources.length) {
+            <h3 class="sources__title">Sources</h3>
+            <ul class="sources">
+              @for (source of message.result.sources; track $index; let j = $index) {
+                <li class="source">
+                  <button type="button" class="source__header" (click)="toggleSource(i + '-' + j)">
+                    <span class="source__section">{{ source.section || source.file }}</span>
+                    <span class="source__file">{{ source.file }}</span>
+                    <span class="source__score">score {{ source.score.toFixed(2) }}</span>
+                    <span class="source__toggle">{{ isExpanded(i + '-' + j) ? '▲' : '▼' }}</span>
+                  </button>
+                  @if (isExpanded(i + '-' + j)) {
+                    <p class="source__chunk">{{ source.chunk }}</p>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        }
+      </div>
+    }
+  </div>
+
+  <form class="chatbox__form" (ngSubmit)="ask()">
     <input
       type="text"
       name="question"
       [(ngModel)]="question"
-      placeholder="e.g. Wann darf der Vermieter kündigen?"
-      [disabled]="loading()"
+      placeholder="Ask about tenancy, employment or leave law…"
+      [disabled]="isLoading"
       autocomplete="off"
     />
-    <button type="submit" [disabled]="loading()">
-      {{ loading() ? 'Asking…' : 'Ask' }}
+    <button type="submit" [disabled]="isLoading" aria-label="Send">
+      @if (isLoading) {
+        <span class="spinner"></span>
+      } @else {
+        Send
+      }
     </button>
   </form>
 
-  @if (error()) {
-    <p class="error">{{ error() }}</p>
-  }
-
-  @if (loading()) {
-    <p class="loading">Searching the documents…</p>
-  }
-
-  @if (result()) {
-    <section class="answer">
-      <span class="mode-badge" [class.mode-badge--retrieval]="result()!.mode === 'retrieval_only'">
-        {{ result()!.mode === 'full' ? 'LLM answer' : 'Retrieval only' }}
-      </span>
-
-      @if (result()!.answer) {
-        <p class="answer__text">{{ result()!.answer }}</p>
-      } @else {
-        <p class="answer__text answer__text--muted">
-          No LLM is configured (LLM_PROVIDER=none), so here are the most relevant passages instead of a generated answer.
-        </p>
-      }
-
-      @if (result()!.sources.length) {
-        <h2 class="sources__title">Sources</h2>
-        <ul class="sources">
-          @for (source of result()!.sources; track $index) {
-            <li class="source">
-              <button type="button" class="source__header" (click)="toggleSource($index)">
-                <span class="source__section">{{ source.section || source.file }}</span>
-                <span class="source__file">{{ source.file }}</span>
-                <span class="source__score">score {{ source.score.toFixed(2) }}</span>
-                <span class="source__toggle">{{ isExpanded($index) ? '▲' : '▼' }}</span>
-              </button>
-              @if (isExpanded($index)) {
-                <p class="source__chunk">{{ source.chunk }}</p>
-              }
-            </li>
-          }
-        </ul>
-      }
-    </section>
+  @if (formError()) {
+    <p class="chatbox__form-error">{{ formError() }}</p>
   }
 </div>

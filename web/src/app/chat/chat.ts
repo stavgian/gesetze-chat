@@ -1,7 +1,14 @@
 import { FormsModule } from '@angular/forms';
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 
 import { AskResponse, ChatService } from './chat.service';
+
+export interface ChatMessage {
+  question: string;
+  result: AskResponse | null;
+  error: string | null;
+  loading: boolean;
+}
 
 @Component({
   selector: 'app-chat',
@@ -11,48 +18,78 @@ import { AskResponse, ChatService } from './chat.service';
 })
 export class Chat {
   question = '';
-  readonly loading = signal(false);
-  readonly result = signal<AskResponse | null>(null);
-  readonly error = signal<string | null>(null);
-  readonly expandedSources = signal<Set<number>>(new Set());
+  readonly messages = signal<ChatMessage[]>([]);
+  readonly formError = signal<string | null>(null);
+  readonly expandedSources = signal<Set<string>>(new Set());
+
+  @ViewChild('thread') private threadRef?: ElementRef<HTMLDivElement>;
 
   constructor(private readonly chatService: ChatService) {}
+
+  get isLoading(): boolean {
+    const messages = this.messages();
+    return messages.length > 0 && messages[messages.length - 1].loading;
+  }
 
   ask(): void {
     const question = this.question.trim();
     if (!question) {
-      this.error.set('Please enter a question.');
+      this.formError.set('Please enter a question.');
+      return;
+    }
+    if (this.isLoading) {
       return;
     }
 
-    this.loading.set(true);
-    this.error.set(null);
-    this.result.set(null);
-    this.expandedSources.set(new Set());
+    this.formError.set(null);
+    this.question = '';
+    this.messages.update((messages) => [
+      ...messages,
+      { question, result: null, error: null, loading: true },
+    ]);
+    this.scrollToBottom();
 
     this.chatService.ask(question).subscribe({
-      next: (response) => {
-        this.result.set(response);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set('Could not reach the backend. Is the API running on the configured URL?');
-        this.loading.set(false);
-      },
+      next: (response) => this.updateLastMessage({ result: response, loading: false }),
+      error: () =>
+        this.updateLastMessage({
+          error: 'Could not reach the backend. Is the API running on the configured URL?',
+          loading: false,
+        }),
     });
   }
 
-  toggleSource(index: number): void {
+  toggleSource(key: string): void {
     const expanded = new Set(this.expandedSources());
-    if (expanded.has(index)) {
-      expanded.delete(index);
+    if (expanded.has(key)) {
+      expanded.delete(key);
     } else {
-      expanded.add(index);
+      expanded.add(key);
     }
     this.expandedSources.set(expanded);
   }
 
-  isExpanded(index: number): boolean {
-    return this.expandedSources().has(index);
+  isExpanded(key: string): boolean {
+    return this.expandedSources().has(key);
+  }
+
+  private updateLastMessage(patch: Partial<ChatMessage>): void {
+    this.messages.update((messages) => {
+      const updated = [...messages];
+      const last = updated[updated.length - 1];
+      updated[updated.length - 1] = { ...last, ...patch };
+      return updated;
+    });
+    this.scrollToBottom();
+  }
+
+  // Runs after the DOM updates so the thread element has its new scrollHeight.
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      const el = this.threadRef?.nativeElement;
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
+    });
   }
 }
