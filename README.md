@@ -34,7 +34,7 @@ At startup the API reads every `.md`/`.txt`/`.pdf` file in `DOCS_DIR`, splits it
 
 ## Tech stack
 
-- **Backend:** Python 3.11+, FastAPI, Pydantic, [fastembed](https://github.com/qdrant/fastembed) (local multilingual embeddings), NumPy, pypdf, pytest.
+- **Backend:** Python 3.12+, FastAPI, Pydantic, [fastembed](https://github.com/qdrant/fastembed) (local multilingual embeddings), NumPy, pypdf, pytest.
 - **Frontend:** Angular (standalone components, no NgModules), plain SCSS, Vitest.
 - **LLM (optional):** Anthropic API, or a local Ollama model — or no LLM at all.
 
@@ -47,13 +47,34 @@ At startup the API reads every `.md`/`.txt`/`.pdf` file in `DOCS_DIR`, splits it
 
 ## Prerequisites
 
-- Python 3.11+
-- Node.js 22.x and npm 11.x (any recent Node 20/22 LTS should work)
+- [Docker](https://docs.docker.com/get-docker/) and Compose — or, for a manual setup:
+  - Python 3.12+
+  - Node.js 22.x and npm 11.x (any recent Node 20/22 LTS should work)
 - Optional: a running [Ollama](https://ollama.com) instance, or an Anthropic API key
 
 ## Installation and running
 
-### macOS / Linux
+### Docker (fastest way to try it)
+
+With [Docker](https://docs.docker.com/get-docker/) and Compose installed, no local Python or Node toolchain is needed:
+
+```bash
+docker compose up --build
+```
+
+Open http://localhost:4200. The backend runs in retrieval-only mode (`LLM_PROVIDER=none`) by default; override it when starting the stack:
+
+```bash
+LLM_PROVIDER=ollama OLLAMA_MODEL=qwen3:8b docker compose up --build
+# or
+LLM_PROVIDER=anthropic ANTHROPIC_API_KEY=sk-... docker compose up --build
+```
+
+`LLM_PROVIDER=ollama` reaches an Ollama instance running on your host machine automatically (via `host.docker.internal`). The first run downloads the embedding model (~100 MB) into a named volume, so later runs start instantly. To index your own documents instead of the demo law texts, edit `docker-compose.yml` and mount `./private-docs:/docs:ro` instead of `./docs:/docs:ro`.
+
+### Manual setup
+
+#### macOS / Linux
 
 ```bash
 # Backend
@@ -74,7 +95,7 @@ npm start
 
 Open http://localhost:4200.
 
-### Windows (PowerShell)
+#### Windows (PowerShell)
 
 ```powershell
 # Backend
@@ -154,5 +175,4 @@ All of the above (backend lint/format/tests, frontend lint/format/tests/build) r
 - Retrieval hit rate @3 is 55% — good enough to demonstrate the pipeline, not production quality. A cross-encoder reranker on top of the initial cosine search would likely help most.
 - The in-memory NumPy index rebuilds on every restart and doesn't scale past a few thousand chunks; a real deployment would use pgvector or a dedicated vector store.
 - No streaming: the Anthropic/Ollama call blocks until the full answer is generated.
-- No Docker setup yet — would make this easier to run without a local Python/Node toolchain.
 - No authentication/rate limiting, since this is a local demo.

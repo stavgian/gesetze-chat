@@ -1,0 +1,30 @@
+services:
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    environment:
+      - DOCS_DIR=/docs
+      - LLM_PROVIDER=${LLM_PROVIDER:-none}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-5-5}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.1}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+    volumes:
+      # Swap to ./private-docs:/docs:ro to index your own documents instead.
+      - ./docs:/docs:ro
+      - fastembed-cache:/cache/fastembed
+    extra_hosts:
+      # Lets LLM_PROVIDER=ollama reach an Ollama instance running on the host,
+      # on Linux as well as Docker Desktop (which sets this up automatically).
+      - "host.docker.internal:host-gateway"
+
+  web:
+    build: ./web
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+volumes:
+  fastembed-cache:

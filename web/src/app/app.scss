@@ -48,6 +48,12 @@
   display: flex;
 }
 
+.page__main > app-chat {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 .page__footer {
   margin-top: 1.25rem;
   text-align: center;
