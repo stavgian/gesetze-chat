@@ -4,7 +4,7 @@
 
 A retrieval-augmented question-answering demo for German everyday law (tenancy, employment, leave), with a Python/FastAPI backend and an Angular frontend.
 
-> **Portfolio demo — general information from public law texts, not legal advice.**
+> **App Demo — general information from public law texts, not legal advice.**
 
 ![Demo](assets/demo-gesetz-chat.gif)
 
